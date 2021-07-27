@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <?php
+
+    require 'vendor/autoload.php';
+
+    use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+    $inputFileName = './archivos/test1.xlsx"';
+
+    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+
+    $spreadsheet = $reader->load($inputFileName);
+
+    $spreadSheet = new Spreadsheet();
+    $workSheet = $spreadSheet->getActiveSheet();
+
+    // Set details for the formula that we want to evaluate, together with any data on which it depends
+    $workSheet->fromArray(
+        [
+            $spreadsheet->getActiveSheet()->getCell('A1'),
+            $spreadsheet->getActiveSheet()->getCell('B1'),
+            $spreadsheet->getActiveSheet()->getCell('C1'),
+            $spreadsheet->getActiveSheet()->getCell('D1'),
+            $spreadsheet->getActiveSheet()->getCell('E1')
+        ],
+        null,
+        'A1'
+    );
+
+    $cellA1 = $workSheet->getCell('A1');
+    $cellB1 = $workSheet->getCell('B1');
+    $cellC1 = $workSheet->getCell('C1');
+    $cellD1 = $workSheet->getCell('D1');
+    $cellE1 = $workSheet->getCell('E1');
+    ?>
+    <table class="table table-bordered" border="1">
+        <tittle>
+            <center>
+                <h1>Dietool</h1>
+            </center>
+        </tittle>
+        <meta lang="es">
+        <meta charset="utf-8">
+        <thead>
+            <tr>
+                <th>NOMBRE</th>
+                <th>APELLIDO PATERNO</th>
+                <th>APELLIDO MATERNO</th>
+                <th>CAMA</th>
+            </tr>
+        </thead>
+        <td><?php echo $cellA1->getValue(), '; Nombre: ', $cellA1->getCoordinate(), PHP_EOL; ?></td>
+        <td><?php echo $cellB1->getValue(), '; Apellido paterno: ', $cellB1->getCoordinate(), PHP_EOL; ?></td>
+        <td><?php echo $cellC1->getValue(), '; Apellido materno: ', $cellC1->getCoordinate(), PHP_EOL; ?></td>
+        <td><?php echo $cellD1->getValue(), '; Cama: ', $cellD1->getCoordinate(), PHP_EOL; ?></td>
+        <td><?php echo $cellE1->getValue(), '; Concatenado: ', $cellE1->getCoordinate(), PHP_EOL; ?></td>
+</body>
+
+</html>
